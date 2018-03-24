@@ -2,6 +2,7 @@
 
 const {it, describe} = require('mocha');
 const assert = require('assert');
+const Sequelize = require('sequelize');
 
 
 describe('DB', function() {
@@ -12,14 +13,10 @@ describe('DB', function() {
       assert(process.env.POSTGRES_DB);
       assert(process.env.POSTGRES_HOST);
     });
-    
-    it('should be able to connect', function() {
   
-      const {POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_HOST} = process.env;
+    const {POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_HOST} = process.env;
   
-      
-      const Sequelize = require('sequelize');
-      const sequelize = new Sequelize(POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, {
+    let sequelize = new Sequelize(POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, {
         host: POSTGRES_HOST,
         dialect: 'postgres',
         operatorsAliases: false,
@@ -32,19 +29,58 @@ describe('DB', function() {
         },
       });
       
-      sequelize
-        .authenticate()
-        .then(() => {
+    sequelize
+      .authenticate()
+      .then(() => {
+        describe("should be able to connect", function() {
           assert(true);
           console.log('Connection has been established successfully.');
-        })
-        .catch(err => {
-          assert(false);
-          console.error('Unable to connect to the database:', err);
         });
-
-    });
+  
+        describe("should be able to create a table", function() {
+        
+          let User = sequelize.define('user', {
+            firstName: {
+              type: Sequelize.STRING
+            },
+            lastName: {
+              type: Sequelize.STRING
+            }
+          });
+    
+          describe("should be able to insert user data", function() {
+            // force: true will drop the table if it already exists
+            User.sync({force: true}).then(() => {
+              // Table created
+              
+              let testUser = {
+                firstName: 'John',
+                lastName: 'Hancock 3'
+              };
+              
+              return User.create(testUser).then(function() {
+                console.log("User created");
+                it("should succeed to create a user", function() {
+                  assert(true, "User was created");
+                });
+              }).catch(err => {
+                assert(false, "Error while creating user");
+                console.error('Unable to insert data into the db:', err);
+              }).finally(function() {
+                sequelize.close();
+                console.log("Sequelize should be closed");
+              });
+            });
+          });
+        });
+      })
+      .catch(err => {
+        assert(false);
+        console.error('Unable to connect to the database:', err);
+      });
+    
   });
+  
 });
 
 

@@ -100,6 +100,7 @@ sub_attach() { # <service>        - Run bash on a running service
 }
 
 sub_compose() { # <cmd...>        - Run a compose with associated files
+    echo RUNNING: docker-compose $@
     docker-compose $@
 }
 

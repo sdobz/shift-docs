@@ -4,8 +4,8 @@
   "description": "Dynamic components of the shift website",
   "main": "client.js",
   "scripts": {
-    "test": "mocha",
-    "start": "node server.js",
+    "test": "mocha --recursive",
+    "start": "node src/server.js",
     "build": "webpack",
     "watch": "webpack --watch"
   },
