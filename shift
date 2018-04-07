@@ -20,7 +20,7 @@ export COMPOSE_PROJECT_NAME="shift"
 
 # CALDAV
 export CALDAV_DB=caldav
-
+export CALDAV_PORT=8888
 
 # BOOTSTRAP
 source "${BORZOI}/borzoi.sh"

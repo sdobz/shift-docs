@@ -38,19 +38,19 @@ var config =
     // Server specific configuration
     // Please use a proxy in front of Fennel to support TLS.
     // We suggest you use nginx as the TLS endpoint
-    port: 8888,
+    port: process.env.CALDAV_PORT,
     //port: 80,
-    ip: '127.0.0.1',
-    //ip: '0.0.0.0',
+    //ip: '127.0.0.1',
+    ip: '0.0.0.0',
 
     // db specific configuration. you can use whatever sequelize supports.
     db_name: process.env.CALDAV_DB,
-    db_uid: process.env.POSTGRE_USER,
-    db_pwd: process.env.POSTGRE_PASSWORD,
+    db_uid: process.env.POSTGRES_USER,
+    db_pwd: process.env.POSTGRES_PASSWORD,
     db_dialect: 'postgres',
     db_logging: true,
     db_storage: 'na',
-    // db_host: 'localhost', // For myql, postgres etc.
+    db_host: process.env.POSTGRES_HOST, // For myql, postgres etc.
 
     // Authentication
     // Authentication methods so far: courier, htaccess, ldap

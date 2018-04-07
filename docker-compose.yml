@@ -30,8 +30,10 @@ services:
       - POSTGRES_PASSWORD
       - POSTGRES_DB
       - POSTGRES_HOST
+      - CALDAV_DB
     volumes:
       - db:/var/lib/postgresql/data
+      - ./borzoi/db/:/docker-entrypoint-initdb.d/
     ports:
       - 5432
 
@@ -46,13 +48,14 @@ services:
       - POSTGRES_DB
       - POSTGRES_HOST
       - CALDAV_DB
+      - CALDAV_PORT
     volumes:
       - ./borzoi/node/:/opt/borzoi/node/
-      - ./caldav:/home/node/app
+      - ./caldav:/home/node/app/
     expose:
       - "8888"
     entrypoint: /opt/borzoi/node/entrypoint.sh
-    command: "npm run start"
+    command: "npm start"
 
   node: &node
     image: node:8
