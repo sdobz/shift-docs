@@ -15,8 +15,11 @@ export BORZOI="${ROOT}/borzoi"
 export BORZOI_MOTD="=== Herro bby ==="
 
 #### DOCKER ####
-export SERVICES="db nginx node hugo webpack"
+export SERVICES="db nginx node hugo webpack caldav"
 export COMPOSE_PROJECT_NAME="shift"
+
+# CALDAV
+export CALDAV_DB=caldav
 
 
 # BOOTSTRAP

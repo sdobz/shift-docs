@@ -35,6 +35,25 @@ services:
     ports:
       - 5432
 
+  caldav:
+    image: node:8
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - POSTGRES_HOST
+      - CALDAV_DB
+    volumes:
+      - ./borzoi/node/:/opt/borzoi/node/
+      - ./caldav:/home/node/app
+    expose:
+      - "8888"
+    entrypoint: /opt/borzoi/node/entrypoint.sh
+    command: "npm run start"
+
   node: &node
     image: node:8
     user: "node"
@@ -52,12 +71,12 @@ services:
       - "8081"
     entrypoint: /opt/borzoi/node/entrypoint.sh
     command: "npm run start"
-  
+
   webpack:
     << : *node
     expose: []
     command: "npm run build"
-  
+
   hugo:
     image: jojomi/hugo:0.36
     volumes:
