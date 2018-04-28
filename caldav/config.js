@@ -79,11 +79,18 @@ var config =
     // the current process.
     //
     // The current set will allow the owner to access his or her own stuff
+    // authorisation: [
+    //     'cal:$username:*',
+    //     'card:$username:*',
+    //     'p:options,report,propfind',
+    //     'p:$username:*'
+    // ],
+
     authorisation: [
-        'cal:$username:*',
-        'card:$username:*',
+        'cal:*:*',
+        'card:*:*',
         'p:options,report,propfind',
-        'p:$username:*'
+        'p:*:*'
     ],
   
     // authorisation: [

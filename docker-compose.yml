@@ -52,8 +52,8 @@ services:
     volumes:
       - ./borzoi/node/:/opt/borzoi/node/
       - ./caldav:/home/node/app/
-    expose:
-      - "8888"
+    ports:
+      - "${CALDAV_PORT}:8888"
     entrypoint: /opt/borzoi/node/entrypoint.sh
     command: "npm start"
 
